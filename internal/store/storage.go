@@ -11,7 +11,7 @@ type Storage struct {
 		GetAllTables(context.Context) ([]Table, error)
 	}
 	Orders interface {
-		GetOrderByTableId(context.Context, string) (Order, error)
+		GetOrderByTableId(context.Context, int) (Order, error)
 	}
 	Status interface {
 		GetOrderStatusById(context.Context, int) (Status, error)

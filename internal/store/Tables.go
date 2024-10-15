@@ -10,11 +10,13 @@ type TablesStore struct {
 }
 
 type Table struct {
-	TableID     string `json:"id"`
-	Floor       string `json:"floor"`
-	Siting      int64  `json:"siting"`
-	Curr_status string `json:"curr_status"`
-	BranchID    string `json:"branchID"`
+	TableId                       int    `json:"tableId"`
+	TableName                     string `json:"tableName"`
+	TableMapperId                 int    `json:"tableMapperId"`
+	TableMaxPax                   int    `json:"tableMaxPax"`
+	DateTimeSinceLastStatusChange string `json:"dateTimeSinceLastStatusChange"`
+	TableTrackingStatusId         int    `json:"tableTrackingStatusId"`
+	TableTrackingStatusName       string `json:"tableTrackingStatusName"`
 }
 
 func (s *TablesStore) Create(ctx context.Context, table *Table) error {
@@ -22,7 +24,7 @@ func (s *TablesStore) Create(ctx context.Context, table *Table) error {
 		INSERT INTO tables (id)
 		VALUES ($1)
 	`
-	err := s.db.QueryRowContext(ctx, query, table.TableID).Scan(&table.TableID)
+	err := s.db.QueryRowContext(ctx, query, table.TableId).Scan(&table.TableId)
 
 	return err
 }
@@ -41,7 +43,8 @@ func (s *TablesStore) GetAllTables(ctx context.Context) ([]Table, error) {
 	var tables []Table
 	for rows.Next() {
 		var table Table
-		err := rows.Scan(&table.TableID, &table.Floor, &table.Siting, &table.Curr_status, &table.BranchID)
+		err := rows.Scan(&table.TableId, &table.TableName, &table.TableMapperId, &table.TableMaxPax,
+			&table.DateTimeSinceLastStatusChange, &table.TableTrackingStatusId, &table.TableTrackingStatusName)
 		if err != nil {
 			return nil, err
 		}

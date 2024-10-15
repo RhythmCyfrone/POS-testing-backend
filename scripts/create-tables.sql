@@ -1,40 +1,43 @@
 DROP TABLE IF EXISTS tables;
 CREATE TABLE tables (
-  TableId    VARCHAR(128) NOT NULL,
-  Floor      VARCHAR(128) NOT NULL,
-  Siting     INT NOT NULL,
-  Curr_status  VARCHAR(128) NOT NULL,
-  BranchId  VARCHAR(128) NOT NULL,
-  PRIMARY KEY (TableID)
+  TableId    INT NOT NULL,
+  TableName  VARCHAR(128),
+  TableMapperId INT,
+  TableMaxPax INT,
+  DateTimeSinceLastStatusChange VARCHAR(128),
+  TableTrackingStatusId INT,
+  TableTrackingStatusName VARCHAR(128),
+  PRIMARY KEY (TableId)
 );
 
-INSERT INTO tables (TableId, Floor, Siting, Curr_status, BranchId) VALUES
-('A1', '1', 2, 'Free', '1'),
-('A2', '1', 4, 'Reserved', '1'),
-('A3', '1', 2, 'Assigned', '1'),
-('A4', '1', 4, 'Ordered', '1'),
-('A5', '1', 2, 'Billed', '1'),
-('A6', '1', 4, 'Paid', '1'),
-('A7', '1', 2, 'Free', '1'),
-('A8', '1', 4, 'Reserved', '1'),
-('A9', '1', 2, 'Assigned', '1'),
-('A10', '1', 4, 'Ordered', '1'),
-('A11', '1', 2, 'Billed', '1'),
-('A12', '1', 4, 'Paid', '1'),
-('A13', '1', 2, 'Free', '1'),
-('A14', '1', 4, 'Reserved', '1'),
-('A15', '1', 2, 'Assigned', '1'),
-('A16', '1', 4, 'Ordered', '1'),
-('A17', '1', 2, 'Billed', '1'),
-('A18', '1', 4, 'Paid', '1'),
-('A19', '1', 2, 'Free', '1'),
-('A20', '1', 4, 'Reserved', '1');
+INSERT INTO tables (TableId, TableName, TableMapperId, TableMaxPax, DateTimeSinceLastStatusChange, TableTrackingStatusId, TableTrackingStatusName) VALUES
+(7, 'A1', 8, 2, '2024-10-12T08:10:00', 1, 'Free'),
+(8, 'A2', 9, 4, '2024-10-12T08:15:00', 2, 'Reserved'),
+(9, 'A3', 10, 2, '2024-10-12T08:20:00', 3, 'Assigned'),
+(10, 'A4', 11, 6, '2024-10-12T08:25:00', 4, 'Ordered'),
+(11, 'A5', 12, 4, '2024-10-12T08:30:00', 5, 'Served'),
+(12, 'A6', 13, 2, '2024-10-12T08:35:00', 6, 'Billed'),
+(13, 'A7', 14, 8, '2024-10-12T08:40:00', 7, 'Paid'),
+(14, 'A8', 15, 2, '2024-10-12T08:45:00', 1, 'Free'),
+(15, 'A9', 16, 4, '2024-10-12T08:50:00', 2, 'Reserved'),
+(16, 'A10', 17, 6, '2024-10-12T08:55:00', 3, 'Assigned'),
+(17, 'A11', 18, 4, '2024-10-12T09:00:00', 4, 'Ordered'),
+(18, 'A12', 19, 2, '2024-10-12T09:05:00', 5, 'Served'),
+(19, 'A13', 20, 4, '2024-10-12T09:10:00', 6, 'Billed'),
+(20, 'A14', 21, 6, '2024-10-12T09:15:00', 7, 'Paid'),
+(21, 'A15', 22, 8, '2024-10-12T09:20:00', 1, 'Free'),
+(22, 'A16', 23, 4, '2024-10-12T09:25:00', 2, 'Reserved'),
+(23, 'A17', 24, 2, '2024-10-12T09:30:00', 3, 'Assigned'),
+(24, 'A18', 25, 6, '2024-10-12T09:35:00', 4, 'Ordered'),
+(25, 'A19', 26, 4, '2024-10-12T09:40:00', 5, 'Served'),
+(26, 'A20', 27, 2, '2024-10-12T09:45:00', 6, 'Billed');
+
 
 DROP TABLE IF EXISTS orders;
 -- Create table for 'Order'
 CREATE TABLE orders (
     OrderId VARCHAR(255) PRIMARY KEY,
-    TableId VARCHAR(255) NOT NULL,
+    TableId INT NOT NULL,
     CustomerId VARCHAR(255),
     CustomerName VARCHAR(255),
     OrderTakerId VARCHAR(255),
@@ -47,16 +50,16 @@ CREATE TABLE orders (
 -- Insert random data into Orders
 INSERT INTO orders (OrderId, TableId, CustomerId, CustomerName, OrderTakerId, OrderTakerName, OrderStatusId, BillId)
 VALUES 
-('ORD001', 'A1', 'CUST001', 'John Doe', 'TAKER001', 'Alice', 1, 101),
-('ORD002', 'A2', 'CUST002', 'Jane Smith', 'TAKER002', 'Bob', 2, 102),
-('ORD003', 'A3', 'CUST003', 'Michael Johnson', 'TAKER003', 'Charlie', 1, 103),
-('ORD004', 'A4', 'CUST004', 'Emily Davis', 'TAKER004', 'David', 3, 104),
-('ORD005', 'A5', 'CUST005', 'Chris Martin', 'TAKER001', 'Alice', 2, 105),
-('ORD006', 'A6', 'CUST006', 'Laura Brown', 'TAKER002', 'Bob', 1, 106),
-('ORD007', 'A7', 'CUST007', 'Ethan Wilson', 'TAKER003', 'Charlie', 3, 107),
-('ORD008', 'A8', 'CUST008', 'Olivia Taylor', 'TAKER004', 'David', 2, 108),
-('ORD009', 'A9', 'CUST009', 'Sophia Thomas', 'TAKER001', 'Alice', 1, 109),
-('ORD010', 'A10', 'CUST010', 'Liam Clark', 'TAKER002', 'Bob', 3, 110);
+('ORD001', 9, 'CUST001', 'John Doe', 'TAKER001', 'Alice', 1, 101),
+('ORD002', 10, 'CUST002', 'Jane Smith', 'TAKER002', 'Bob', 2, 102),
+('ORD003', 11, 'CUST003', 'Michael Johnson', 'TAKER003', 'Charlie', 1, 103),
+('ORD004', 12, 'CUST004', 'Emily Davis', 'TAKER004', 'David', 3, 104),
+('ORD005', 13, 'CUST005', 'Chris Martin', 'TAKER001', 'Alice', 2, 105),
+('ORD006', 15, 'CUST006', 'Laura Brown', 'TAKER002', 'Bob', 1, 106),
+('ORD007', 16, 'CUST007', 'Ethan Wilson', 'TAKER003', 'Charlie', 3, 107),
+('ORD008', 17, 'CUST008', 'Olivia Taylor', 'TAKER004', 'David', 2, 108),
+('ORD009', 18, 'CUST009', 'Sophia Thomas', 'TAKER001', 'Alice', 1, 109),
+('ORD010', 19, 'CUST010', 'Liam Clark', 'TAKER002', 'Bob', 3, 110);
 
 DROP TABLE IF EXISTS tableStatus;
 

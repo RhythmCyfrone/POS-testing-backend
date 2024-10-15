@@ -8,7 +8,8 @@ import (
 )
 
 func (app *application) getOrderByTableId(w http.ResponseWriter, r *http.Request) {
-	order, err := app.store.Orders.GetOrderByTableId(r.Context(), chi.URLParam(r, "tableId"))
+	tableID, _ := strconv.Atoi(chi.URLParam(r, "tableId"))
+	order, err := app.store.Orders.GetOrderByTableId(r.Context(), tableID)
 	if err != nil {
 		app.internalServerError(w, err)
 		return

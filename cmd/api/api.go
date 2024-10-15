@@ -33,8 +33,8 @@ func (app *application) mount() *chi.Mux {
 	r.Use(middleware.Timeout(time.Second * 30))
 
 	r.Route("/v1", func(r chi.Router) {
-		r.Route("/tables", func(r chi.Router) {
-			r.Get("/getAllTables", app.getAllTables)
+		r.Route("/PointOfSale", func(r chi.Router) {
+			r.Get("/GetAllPosTables", app.getAllTables)
 		})
 		r.Route("/orders", func(r chi.Router) {
 			r.Get("/getOrderByTableId/{tableId}", app.getOrderByTableId)

@@ -11,7 +11,7 @@ type OrdersStore struct {
 
 type Order struct {
 	OrderId        string `json:"orderId"`
-	TableId        string `json:"tableId"`
+	TableId        int    `json:"tableId"`
 	CustomerId     string `json:"customerId"`
 	CustomerName   string `json:"customerName"`
 	OrderTakerId   string `json:"orderTakerId"`
@@ -20,7 +20,7 @@ type Order struct {
 	BillID         int    `json:"billId"`
 }
 
-func (s *OrdersStore) GetOrderByTableId(ctx context.Context, tableId string) (Order, error) {
+func (s *OrdersStore) GetOrderByTableId(ctx context.Context, tableId int) (Order, error) {
 	query := `
 		SELECT *
 		FROM orders
